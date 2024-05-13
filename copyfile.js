@@ -8,7 +8,8 @@ for(const entry of fs.readdirSync('./src')) {
     if(p.ext !== ".ts") {
         continue;
     }
-    if(p.name == "type-mapper") {
+
+    if(p.name === "type-mapper") {
         continue;
     }
 

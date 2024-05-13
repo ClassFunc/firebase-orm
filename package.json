@@ -30,12 +30,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Polyrhythm-Inc/firebase-orm.git"
+    "url": "git+https://github.com/ClassFunc/firebase-orm.git"
   },
   "bugs": {
-    "url": "https://github.com/Polyrhythm-Inc/firebase-orm/issues"
+    "url": "https://github.com/ClassFunc/firebase-orm/issues"
   },
-  "homepage": "https://github.com/Polyrhythm-Inc/firebase-orm#readme",
+  "homepage": "https://github.com/ClassFunc/firebase-orm#readme",
   "description": "",
   "husky": {
     "hooks": {
