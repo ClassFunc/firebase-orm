@@ -1,12 +1,11 @@
-import { 
-    findMeta, 
-    ColumnSetting, 
-    ClassType, 
-    EntityMetaData, 
-    _ManyToOneSetting, 
-    _OneToManySetting, 
-    _OneToOneSetting, 
-    _ColumnSetting, 
+import {
+    findMeta,
+    ColumnSetting,
+    ClassType,
+    EntityMetaData,
+    _ManyToOneSetting,
+    _OneToManySetting,
+    _OneToOneSetting,
     _ArrayReference,
     JoinColumnSetting
 } from './Entity';
@@ -74,11 +73,11 @@ export class FirestoreReference<T> {
         }
     }
 
-    public async set(params: QueryPartialEntity<T>) {
+    public async set(params: any | QueryPartialEntity<T>) {
         if(this.ref instanceof firestore.DocumentReference || isBrowserOptimizedDocumentReference(this.ref)) {
             const ref = this.ref as DocumentReference;
             if(this.transaction) {
-                await this.transaction.set(ref, params);
+                this.transaction.set(ref, params);
                 return;
             } else {
                 await ref.set(params);
@@ -89,11 +88,11 @@ export class FirestoreReference<T> {
         throw new Error('reference should be DocumentReference');
     }
 
-    public async update(params: QueryPartialEntity<T>) {
+    public async update(params: any | QueryPartialEntity<T>) {
         if(this.ref instanceof firestore.DocumentReference || isBrowserOptimizedDocumentReference(this.ref)) {
             const ref = this.ref as DocumentReference;
             if(this.transaction) {
-                await this.transaction.update(ref, params);
+                this.transaction.update(ref, params);
                 return;
             } else {
                 await ref.update(params);
@@ -102,7 +101,7 @@ export class FirestoreReference<T> {
         }
 
         throw new Error('reference should be DocumentReference');
-    }    
+    }
 }
 
 export class RelationNotFoundError extends Error {
@@ -175,7 +174,7 @@ export async function buildEntity<T>(meta: EntityMetaData, data: any, reference:
             throw new RelationNotFoundError(relation);
         }
     }
-    
+
     for(const setting of meta.columns) {
         let keyInForestore = getName(setting) || setting.propertyKey;
         if(setting instanceof _ManyToOneSetting) {
@@ -188,7 +187,7 @@ export async function buildEntity<T>(meta: EntityMetaData, data: any, reference:
             }
             const rawRef = (data as any)[keyInForestore];
             const hierarchy = await followHierarchy({
-                setting: setting, 
+                setting: setting,
                 relations: {
                     top: setting.propertyKey,
                     hierarchy: relation
@@ -207,7 +206,7 @@ export async function buildEntity<T>(meta: EntityMetaData, data: any, reference:
                 continue;
             }
             const hierarchy = await followHierarchy({
-                setting: setting, 
+                setting: setting,
                 relations: {
                     top: setting.propertyKey,
                     hierarchy: relation
@@ -228,7 +227,7 @@ export async function buildEntity<T>(meta: EntityMetaData, data: any, reference:
                 keyInForestore = setting.option.joinColumnName;
                 const rawRef = (data as any)[keyInForestore];
                 const hierarchy = await followHierarchy({
-                    setting: setting, 
+                    setting: setting,
                     relations: {
                         top: setting.propertyKey,
                         hierarchy: relation
@@ -242,7 +241,7 @@ export async function buildEntity<T>(meta: EntityMetaData, data: any, reference:
                 Object.assign(plain, hierarchy);
             } else if(setting.option?.relationColumn) {
                 const hierarchy = await followHierarchy({
-                    setting: setting, 
+                    setting: setting,
                     relations: {
                         top: setting.propertyKey,
                         hierarchy: relation
@@ -261,7 +260,7 @@ export async function buildEntity<T>(meta: EntityMetaData, data: any, reference:
                 continue;
             }
             const hierarchy = await followHierarchy({
-                setting: setting, 
+                setting: setting,
                 relations: {
                     top: setting.propertyKey,
                     hierarchy: relation
@@ -283,11 +282,11 @@ export async function buildEntity<T>(meta: EntityMetaData, data: any, reference:
     }
     instance[documentReferencePath] = data[documentReferencePath];
     return instance;
-}   
+}
 
 
 async function followHierarchy<T>(params: {
-    setting: JoinColumnSetting & {getEntity: () => ClassType<T & {id: string}>}, 
+    setting: JoinColumnSetting & {getEntity: () => ClassType<T & {id: string}>},
     relations: {
         top: string,
         hierarchy?: {[key: string]: any}
@@ -352,7 +351,7 @@ async function followHierarchy<T>(params: {
                 if(unboxed && unboxed[0]) {
                     const meta = findMeta(params.setting.getEntity());
                     return buildEntity(meta, unboxed[0], ref, {relations: groupToRelation(params.relations.hierarchy || {})});
-                }     
+                }
                 return null;
             })
         }));

@@ -1,8 +1,8 @@
 import { EntityMetaData } from './Entity';
 import { FetchOption } from "./Repository";
 import { DocumentReference, DocumentSnapshot, Query, QuerySnapshot } from './type-mapper';
-export declare type ReferenceWrap = DocumentReference | Query;
-export declare type SnapShotWrap = DocumentSnapshot | QuerySnapshot;
+export type ReferenceWrap = DocumentReference | Query;
+export type SnapShotWrap = DocumentSnapshot | QuerySnapshot;
 export declare type QueryPartialEntity<T> = {
     [P in keyof T]?: T[P] | (() => string);
 };
@@ -23,8 +23,8 @@ export declare class FirestoreReference<T> {
     transaction?: FirebaseFirestore.Transaction | undefined;
     constructor(ref: ReferenceWrap, transaction?: FirebaseFirestore.Transaction | undefined);
     get(): Promise<SnapShotBox>;
-    set(params: QueryPartialEntity<T>): Promise<void>;
-    update(params: QueryPartialEntity<T>): Promise<void>;
+    set(params: any | QueryPartialEntity<T>): Promise<void>;
+    update(params: any | QueryPartialEntity<T>): Promise<void>;
 }
 export declare class RelationNotFoundError extends Error {
     relation: string;

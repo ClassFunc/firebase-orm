@@ -1,10 +1,10 @@
 import { ClassType, EntityMetaData } from './Entity';
 import { ReferenceWrap, FirestoreReference, QueryPartialEntity } from './EntityBuilder';
 import { Firestore, CollectionReference, DocumentReference, Transaction, DocumentChangeType } from './type-mapper';
-export declare type FetchOption = {
+export type FetchOption = {
     relations: string[];
 };
-export declare type OnsnapShotResult<T> = {
+export type OnsnapShotResult<T> = {
     type: DocumentChangeType;
     id: string;
     item?: T;
@@ -22,7 +22,7 @@ export declare function addDBToPool(name: string, db: Firestore): void;
 export declare function use(name: string): void;
 export declare function takeDBFromPool(name: string): FirebaseFirestore.Firestore;
 export declare function getCurrentDB(): Firestore;
-export declare type ParentIDMapper = (Entity: Function) => string;
+export type ParentIDMapper = (Entity: Function) => string;
 export declare class Repository<T extends {
     id: string;
 }> {

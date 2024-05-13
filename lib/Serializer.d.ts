@@ -1,6 +1,6 @@
 import { ClassType } from "./Entity";
 import { ParentIDMapper } from "./Repository";
-export declare type ParentInfo = {
+export type ParentInfo = {
     collection: string;
     id: string;
     child?: ParentInfo;
