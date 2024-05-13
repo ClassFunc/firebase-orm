@@ -6,6 +6,7 @@ export class RecordNotFoundError extends Error {
         Object.setPrototypeOf(this, RecordNotFoundError.prototype);
     }
 
+
     public toString() {
         return this.name + ': ' + this.message;
     }
