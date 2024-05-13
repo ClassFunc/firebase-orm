@@ -12,7 +12,7 @@ for(const entry of fs.readdirSync('./src')) {
         continue;
     }
 
-    const out = `${__dirname}/../firebase-orm-client/src/${entry}`;
+    const out = `${__dirname}/../firebase-orm/src/${entry}`;
     const content = fs.readFileSync(`./src/${entry}`, 'utf8');
     fs.writeFileSync(out, header+content)
     console.log(`copied to: ${out}`);
